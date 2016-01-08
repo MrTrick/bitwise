@@ -9,14 +9,20 @@
 
 //Exhaustively calculate *all* possible latin squares of size N, sending solutions back to the given function.
 int latin(ELEM sq[], const uint8_t N, void cb(ELEM[],const uint8_t)) {
+	//Precalculated values
    const ELEM ALLb=(1<<N)-1;
+   const uint8_t L=N*N, Lr=L-N;
+   uint8_t hmore[L]; 
+   memset(hmore,1,sizeof(hmore)); 
+   for(int i=N-1;i<L;i+=N) hmore[i]=0;
 
+	//Variables
    uint64_t count=0;                               //Tally of how many squares found
-   ELEM hfree[N*N], vfree[N*N];                    //Free bits in each row/col
-   ELEM free[N*N];                                 //Free and unchecked bits in each element
+   ELEM hfree[L], vfree[L];                    		//Free bits in each row/col
+   ELEM free[L];                                 	//Free and unchecked bits in each element
    uint8_t i;                                      //Current index
    ELEM el;                                        //Current element
-   memset(free,0,sizeof(free));   memset(hfree,0,sizeof(hfree));  memset(vfree,0,sizeof(vfree)); //Clear memory to make debugging clearer
+   //memset(free,0,sizeof(free));   memset(hfree,0,sizeof(hfree));  memset(vfree,0,sizeof(vfree)); //Clear memory to make debugging clearer
 
    //Initial values
    for(i=0;i<N;i++) hfree[N*i]=vfree[i]=ALLb;      // Top and left sides are available
@@ -25,12 +31,12 @@ int latin(ELEM sq[], const uint8_t N, void cb(ELEM[],const uint8_t)) {
 
    loop_el: do {                                   // While there is search space
       while ((el=free[i]&-free[i])) {              // While there are valid and unchecked values at [i]
-                                                   //     (el = lowest '1', eg if free[i] is 0b101100, el is 0b000100)
-         free[i]&=~el;                             // Mark el as checked
-         if ((i+1)%N) hfree[i+1]=hfree[i]&~el;     // Value can't be used to the right
-         if ((i+N)<N*N) vfree[i+N]=vfree[i]&~el;   // Value can't be used underneath
+                                                   //     (el = lowest '1', eg if free is 0b101100, el is 0b000100)
+         free[i]&=~el;                            	// Mark el as checked
+         if (hmore[i]) hfree[i+1]=hfree[i]&~el;    // Value can't be used to the right
+         if (i<Lr) vfree[i+N]=vfree[i]&~el;   		// Value can't be used underneath
          sq[i]=el;                                 // Record element
-         if (i==N*N-1) {                           // Is the square complete?
+         if (i==L-1) {                           	// Is the square complete?
             cb(sq,N);                              //  Yes; Pass back to the caller
             count++;                               //       Tally the solution
          } else {
