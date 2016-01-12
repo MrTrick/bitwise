@@ -1,0 +1,27 @@
+[minion@minion bitwise]$ ./run.sh partition 24 
+Found 1 partitions of 24 parts summing to 24.
+Found 1 partitions of 23 parts summing to 24.
+Found 2 partitions of 22 parts summing to 24.
+Found 3 partitions of 21 parts summing to 24.
+Found 5 partitions of 20 parts summing to 24.
+Found 7 partitions of 19 parts summing to 24.
+Found 11 partitions of 18 parts summing to 24.
+Found 15 partitions of 17 parts summing to 24.
+Found 22 partitions of 16 parts summing to 24.
+Found 30 partitions of 15 parts summing to 24.
+Found 42 partitions of 14 parts summing to 24.
+Found 56 partitions of 13 parts summing to 24.
+Found 77 partitions of 12 parts summing to 24.
+Found 99 partitions of 11 parts summing to 24.
+Found 128 partitions of 10 parts summing to 24.
+Found 157 partitions of 9 parts summing to 24.
+Found 186 partitions of 8 parts summing to 24.
+Found 201 partitions of 7 parts summing to 24.
+Found 199 partitions of 6 parts summing to 24.
+Found 164 partitions of 5 parts summing to 24.
+Found 108 partitions of 4 parts summing to 24.
+Found 48 partitions of 3 parts summing to 24.
+Found 12 partitions of 2 parts summing to 24.
+Found 1 partitions of 1 parts summing to 24.
+In total; 1575 
+
