@@ -29,6 +29,14 @@ bool next_n_sum(const uint8_t N, const uint8_t T, uint8_t parts[]) {
    return 0;                                       // No more solutions; finished
 }
 
+//Algorithm from https://en.wikipedia.org/wiki/Partition_(number_theory)#Restricted_part_size_or_number_of_parts
+//  p_k(n) = p_k(n − k) + p_{k − 1}(n − 1), p_0(0)=1, p_k(n)=0 if n<=0 or k<=0
+//  Returns number of partitions of k parts adding to n
+//  (Recurses, and doesn't iterate only counts)
+int partitions(int k,int n) {
+   return (k==0&&n==0)?1:(k<=0||n<=0)?0:partitions(k,n-k)+partitions(k-1,n-1);
+}
+
 
 int main(int argc, char *argv[]) {
    if (argc<2) { printf("ERR: Must define total!"); exit(1); }
@@ -42,7 +50,7 @@ int main(int argc, char *argv[]) {
       for(count=0,parts[0]=0;next_n_sum(n,N,parts);count++) {
          //for(int i=0;i<n;i++) printf("%d ",parts[i]); printf("\n");         // Print each arrangement found
       }
-      printf("Found %d partitions of %d parts summing to %d.\n",count,n,N);
+      printf("Found %d partitions of %d parts summing to %d. (%d vs %d)\n",count,n,N,count, partitions(n,N));
       tcount+=count;
    }
    printf("In total; %d \n\n",tcount);
